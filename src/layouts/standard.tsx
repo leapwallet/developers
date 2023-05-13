@@ -20,17 +20,17 @@ export const StandardLayout: React.FC<Props> = ({ children }) => {
           width={40}
           src={LeapLogo}
           alt="Leap Logo"
-          className="h-10 w-10 rounded-lg mt-24"
+          className="h-10 w-10 rounded-lg mt-8 sm:mt-24"
         />
-        <h1 className="text-4xl font-bold mt-4 text-center">
+        <h1 className="text-3xl sm:text-4xl font-bold mt-4 text-center">
           <span className="text-indigo-400">Deep Link</span>{' '}
           <span className="text-gray-900">Generator</span>
         </h1>
-        <h2 className="text-gray-500 font-medium mt-1 text-lg text-center">
+        <h2 className="text-gray-500 font-medium mt-1 sm:text-lg text-center px-10">
           Generate deep links for Leap&apos;s dApp Browser
         </h2>
       </header>
-      <main className="p-4">
+      <main className="p-4 max-h-full">
         <div className="relative max-w-xl mx-auto max-h-full rounded-xl bg-gradient-to-r from-fuchsia-400 via-blue-500 to-purple-500 p-[2px] glowy-bg">
           <div className="rounded-[10px] bg-white h-full overflow-y-auto">
             {children}

@@ -91,7 +91,7 @@ export default function Home() {
             Generate Deep Link
           </p>
         </div>
-        <div className="p-6">
+        <div className="p-4 sm:p-6">
           <div className="flex flex-col gap-4">
             <div className="flex flex-col gap-2">
               <label htmlFor="title" className="text-gray-900 font-medium">
@@ -135,7 +135,7 @@ export default function Home() {
                   }}
                 />
                 <p
-                  className="text-gray-900 font-bold cursor-pointer mt-4"
+                  className="text-gray-900 font-bold cursor-pointer mt-4 max-w-full overflow-hidden text-ellipsis"
                   onClick={copyLinkToClipboard}
                 >
                   {deepLink}
@@ -146,14 +146,14 @@ export default function Home() {
               </div>
             ) : null}
             {generatorState === 'success' && deepLink !== null ? (
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2">
                 <button
                   className="bg-gray-900 text-white rounded-full p-2 mt-2"
                   onClick={copyLinkToClipboard}
                 >
                   Copy Link
                 </button>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
                   <button
                     id={downloadButtonID}
                     className="bg-white flex-1 text-gray-900 border border-gray-900 rounded-full p-2"
