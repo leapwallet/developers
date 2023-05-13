@@ -3,6 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   distDir: 'build',
+  basePath: '/deeplink-generator',
   images: {
     unoptimized: true
   }
