@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from 'react'
 import QRCodeStyling from 'qr-code-styling'
 import LeapLogo from '~/assets/leap-logo.svg'
+import { toast } from 'react-hot-toast'
 
 type Props = {
   data: string
@@ -63,9 +64,18 @@ export const QrCode = ({ width, height, data, downloadConfig }: Props) => {
           height: 512,
           width: 512
         })
-        biggerQR.download({
-          name: downloadConfig.fileName,
-          extension: 'png'
+        biggerQR.getRawData('png').then((blob) => {
+          if (!blob) {
+            toast.error('Something went wrong, please reload the page.')
+            return
+          }
+          const link = document.createElement('a')
+          const blobUrl = URL.createObjectURL(blob)
+          link.setAttribute('href', blobUrl)
+          link.setAttribute('target', '_blank')
+          link.setAttribute('download', `${downloadConfig.fileName}.png`)
+          link.click()
+          URL.revokeObjectURL(blobUrl)
         })
       }
 

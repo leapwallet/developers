@@ -23,7 +23,13 @@ const validateUrl = (url: string): FormHelper => {
     }
   }
   try {
-    new URL(trimmedUrl)
+    const url = new URL(trimmedUrl)
+    if (url.protocol !== 'https:') {
+      return {
+        message: 'URL must start with https',
+        type: 'error'
+      }
+    }
     return {
       message: 'Looks good',
       type: 'info'
@@ -63,6 +69,8 @@ export default function Home() {
     if (validationResult.type === 'error') {
       setUrlInputHelper(validationResult)
       return
+    } else {
+      setUrlInputHelper(null)
     }
     // 2. Generate Deep Link
     setGeneratorState('loading')
@@ -70,12 +78,22 @@ export default function Home() {
       const response = await fetch(
         `https://api.leapwallet.io/deeplink?dapp-url=${encodeURIComponent(url)}`
       )
-      const data: { shortLink: string } = await response.json()
-      setGeneratorState('success')
-      setDeepLink(data.shortLink)
-      toast.success('Deep link generated successfully.')
+      if (response.ok) {
+        const data: { shortLink: string } = await response.json()
+        setGeneratorState('success')
+        setDeepLink(data.shortLink)
+        toast.success('Deep link generated successfully.')
+      } else {
+        const data: { reason: string } = await response.json()
+        setGeneratorState('error')
+        toast.error(`${data.reason}`)
+      }
     } catch (error) {
-      toast.error('Failed to generate deep link, please try again.')
+      if (error instanceof Error) {
+        toast.error(error.message)
+      } else {
+        toast.error('Failed to generate deep link, please try again.')
+      }
       setGeneratorState('error')
     }
   }, [urlInput])
@@ -103,6 +121,11 @@ export default function Home() {
                 id="url"
                 value={urlInput}
                 onChange={(event) => {
+                  if (generatorState === 'success') {
+                    setGeneratorState('idle')
+                    setDeepLink(null)
+                    setUrlInputHelper(null)
+                  }
                   setUrlInput(event.target.value)
                   if (urlInputHelper !== null) {
                     setUrlInputHelper(null)
