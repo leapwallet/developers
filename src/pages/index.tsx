@@ -1,4 +1,6 @@
+import { Atom, LinkSimple, Storefront } from '@phosphor-icons/react'
 import Head from 'next/head'
+import Link from 'next/link'
 import { useCallback, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import QrCode from '~/components/qr-code'
@@ -103,109 +105,48 @@ export default function Home() {
       <Head>
         <title>Deep Link Generator | LeapWallet.io</title>
       </Head>
-      <StandardLayout>
-        <div className="flex justify-center items-center py-5 pb-4 border-b">
-          <p className="text-gray-900 text-center text-lg font-bold">
-            Generate Deep Link
-          </p>
-        </div>
-        <div className="p-4 sm:p-6">
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <label htmlFor="title" className="text-gray-900 font-medium">
-                dApp URL
-              </label>
-              <input
-                type="url"
-                name="url"
-                id="url"
-                value={urlInput}
-                onChange={(event) => {
-                  if (generatorState === 'success') {
-                    setGeneratorState('idle')
-                    setDeepLink(null)
-                    setUrlInputHelper(null)
-                  }
-                  setUrlInput(event.target.value)
-                  if (urlInputHelper !== null) {
-                    setUrlInputHelper(null)
-                  }
-                }}
-                className="border border-gray-500 rounded-lg p-2"
-                placeholder="https://uniswap.exchange"
-              />
-              {urlInputHelper ? (
-                <p
-                  className={`text-sm font-medium ${
-                    urlInputHelper.type === 'error'
-                      ? 'text-red-500'
-                      : 'text-gray-500'
-                  }`}
+      <StandardLayout
+        title={
+          <>
+            <span className="text-indigo-400">Leap</span>{' '}
+            <span className="text-gray-900">Developer Hub</span>
+          </>
+        }
+        subtitle="Creating a better cosmos blockchain experience"
+      >
+        <main className="p-4 max-h-full">
+          <div className="relative max-w-xl mx-auto max-h-full rounded-xl bg-gradient-to-r from-fuchsia-400 via-blue-500 to-purple-500 p-[2px] glowy-bg">
+            <div className="rounded-[10px] bg-white h-full overflow-y-auto">
+              <div className="flex justify-center items-center py-5 pb-4 border-b">
+                <h2 className="text-gray-900 text-center text-lg font-bold">
+                  Quick Links
+                </h2>
+              </div>
+              <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-4 p-6">
+                <Link
+                  className="group rounded-lg border border-gray-500 transition-all px-3 py-2 flex items-center gap-2 text-gray-900"
+                  href="deeplink-generator"
                 >
-                  {urlInputHelper.message}
-                </p>
-              ) : null}
+                  <LinkSimple
+                    className="transition-colors group-hover:text-indigo-400"
+                    size={20}
+                  />
+                  <p>Deep Link Generator</p>
+                </Link>
+                <Link
+                  className="group rounded-lg border border-gray-500 transition-all px-3 py-2 flex items-center gap-2"
+                  href="chain-store"
+                >
+                  <Atom
+                    className="transition-colors group-hover:text-indigo-400"
+                    size={20}
+                  />
+                  <p>Chain Store</p>
+                </Link>
+              </div>
             </div>
-            {generatorState === 'success' && deepLink !== null ? (
-              <div className="flex flex-col items-center justify-center mt-4">
-                <QrCode
-                  width={200}
-                  height={200}
-                  data={deepLink}
-                  downloadConfig={{
-                    elementID: downloadButtonID,
-                    fileName: `leap-deep-link-${new URL(urlInput).hostname}`
-                  }}
-                />
-                <p
-                  className="text-gray-900 font-bold cursor-pointer mt-4 max-w-full overflow-hidden text-ellipsis"
-                  onClick={copyLinkToClipboard}
-                >
-                  {deepLink}
-                </p>
-                <p className="text-gray-500 text-sm font-medium mt-2">
-                  (Scan QR code or Click the Link to copy)
-                </p>
-              </div>
-            ) : null}
-            {generatorState === 'success' && deepLink !== null ? (
-              <div className="flex flex-col gap-2">
-                <button
-                  className="bg-gray-900 text-white rounded-full p-2 mt-2"
-                  onClick={copyLinkToClipboard}
-                >
-                  Copy Link
-                </button>
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2">
-                  <button
-                    id={downloadButtonID}
-                    className="bg-white flex-1 text-gray-900 border border-gray-900 rounded-full p-2"
-                  >
-                    Download QR Code
-                  </button>
-                  <button
-                    className="bg-white flex-1 text-gray-900 border border-gray-900 rounded-full p-2"
-                    onClick={resetForm}
-                  >
-                    Generate New Link
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <button
-                className="bg-gray-900 text-white rounded-full p-2 disabled:bg-gray-700"
-                onClick={handleRequestDeepLink}
-                disabled={generatorState === 'loading'}
-              >
-                {generatorState === 'loading' ? (
-                  <Spinner theme="dark" />
-                ) : (
-                  'Generate'
-                )}
-              </button>
-            )}
           </div>
-        </div>
+        </main>
       </StandardLayout>
     </>
   )
