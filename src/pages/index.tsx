@@ -1,109 +1,13 @@
-import { Atom, LinkSimple, Storefront } from '@phosphor-icons/react'
+import { Atom, LinkSimple } from '@phosphor-icons/react'
 import Head from 'next/head'
 import Link from 'next/link'
-import { useCallback, useState } from 'react'
-import { toast } from 'react-hot-toast'
-import QrCode from '~/components/qr-code'
-import { Spinner } from '~/components/spinner'
 import { StandardLayout } from '~/layouts/standard'
 
-type GeneratorState = 'idle' | 'loading' | 'success' | 'error'
-
-type FormHelper = {
-  message: string
-  type: 'error' | 'info'
-}
-
-const downloadButtonID = 'download-qr-code-btn'
-
-const validateUrl = (url: string): FormHelper => {
-  const trimmedUrl = url.trim()
-  if (!trimmedUrl) {
-    return {
-      message: 'URL is required',
-      type: 'error'
-    }
-  }
-  try {
-    const url = new URL(trimmedUrl)
-    if (url.protocol !== 'https:') {
-      return {
-        message: 'URL must start with https',
-        type: 'error'
-      }
-    }
-    return {
-      message: 'Looks good',
-      type: 'info'
-    }
-  } catch (error) {
-    return {
-      message: 'Invalid URL',
-      type: 'error'
-    }
-  }
-}
-
 export default function Home() {
-  const [generatorState, setGeneratorState] = useState<GeneratorState>('idle')
-
-  const [urlInput, setUrlInput] = useState<string>('')
-  const [urlInputHelper, setUrlInputHelper] = useState<FormHelper | null>(null)
-  const [deepLink, setDeepLink] = useState<string | null>(null)
-
-  const resetForm = useCallback(() => {
-    setGeneratorState('idle')
-    setDeepLink(null)
-    setUrlInputHelper(null)
-    setUrlInput('')
-  }, [])
-
-  const copyLinkToClipboard = useCallback(() => {
-    if (!deepLink) return
-    navigator.clipboard.writeText(deepLink)
-    toast.success('Deep link copied to clipboard.')
-  }, [deepLink])
-
-  const handleRequestDeepLink = useCallback(async () => {
-    const url = urlInput.trim()
-    // 1. Validate URL
-    const validationResult = validateUrl(url)
-    if (validationResult.type === 'error') {
-      setUrlInputHelper(validationResult)
-      return
-    } else {
-      setUrlInputHelper(null)
-    }
-    // 2. Generate Deep Link
-    setGeneratorState('loading')
-    try {
-      const response = await fetch(
-        `https://api.leapwallet.io/deeplink?dapp-url=${encodeURIComponent(url)}`
-      )
-      if (response.ok) {
-        const data: { shortLink: string } = await response.json()
-        setGeneratorState('success')
-        setDeepLink(data.shortLink)
-        toast.success('Deep link generated successfully.')
-      } else {
-        const data: { reason: string } = await response.json()
-        setGeneratorState('error')
-        toast.error(`${data.reason}`)
-      }
-    } catch (error) {
-      if (error instanceof Error) {
-        toast.error(error.message)
-      } else {
-        toast.error('Failed to generate deep link, please try again.')
-      }
-      setGeneratorState('error')
-    }
-  }, [urlInput])
-
   return (
     <>
       <Head>
-        <title>Deep Link Generator | LeapWallet.io</title>
+        <title>Developer Hub | LeapWallet</title>
       </Head>
       <StandardLayout
         title={
