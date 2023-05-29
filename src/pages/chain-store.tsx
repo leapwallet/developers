@@ -1,8 +1,311 @@
+import {
+  ArrowSquareOut,
+  Check,
+  LinkBreak,
+  MagnifyingGlass,
+  Plus
+} from '@phosphor-icons/react'
 import Head from 'next/head'
-import { ComingSoon } from '~/components/coming-soon'
+import Image from 'next/image'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
+import Fuse from 'fuse.js'
+import ChainImg from '~/assets/chain-image.svg'
+import { PageBanner } from '~/components/page-banner'
 import { StandardLayout } from '~/layouts/standard'
+import { useDebounce } from '~/hooks/use-debounce'
+import { toast } from 'react-hot-toast'
+import { GetStaticProps } from 'next'
+import { readFile, readdir } from 'fs/promises'
+import { dirname, join } from 'path'
 
-export default function ChainStore() {
+const leapWalletChromeStoreURL =
+  'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg'
+
+function useChainsInWallet() {
+  const [chainsInWallet, setChainsInWallet] = useState<Record<string, boolean>>(
+    {}
+  )
+
+  useEffect(() => {
+    if (!window.leap) return
+    window.leap
+      .getSupportedChains()
+      .then((chains) => {
+        const supportedChainsObject: Record<string, boolean> = {}
+        chains.forEach((chain) => {
+          supportedChainsObject[chain] = true
+        })
+        setChainsInWallet(supportedChainsObject)
+      })
+      .catch((err) => {
+        console.error(err)
+      })
+  }, [])
+
+  return chainsInWallet
+}
+
+const TableHeader = () => (
+  <div className="flex items-center w-full text-gray-500 font-medium">
+    <p className="flex-[4] p-4 text-left">Chain</p>
+    <p className="flex-[2] p-4 text-left">Currency</p>
+    <p className="flex-[4] p-4 text-center">Node Provider</p>
+    <p className="flex-[2] p-4 text-center">Status</p>
+  </div>
+)
+
+const TableBody: React.FC<{
+  chains: SuggestChainData[]
+}> = ({ chains }) => {
+  const chainsInWallet = useChainsInWallet()
+
+  return (
+    <div className="w-full">
+      {chains.map((chain) => {
+        const nodeURL = new URL(chain.apis.rpc)
+        const nodeOrigin = nodeURL.origin
+        const nodeHostName = nodeURL.hostname
+        const redirectUrl = `${nodeOrigin}/${chain.chainRegistryPath}`
+        const nativeDenom = Object.values(chain.nativeDenoms)[0]
+
+        return (
+          <div key={chain.chainId} className="flex items-center w-full">
+            <div className="flex-[4] px-4 py-3 flex items-center gap-4">
+              <Image
+                alt="chain logo"
+                src={chain.chainSymbolImageUrl}
+                width={32}
+                height={32}
+                onError={(e) => {
+                  e.currentTarget.src = ChainImg.src
+                  e.currentTarget.onerror = null
+                  e.currentTarget.classList.add('bg-gray-100')
+                  e.currentTarget.classList.add('p-[3px]')
+                  e.currentTarget.classList.add('border')
+                }}
+                className="rounded-full"
+              />
+              <span>{chain.chainName}</span>
+            </div>
+            <div className="flex-[2] px-4 py-3 text-left">
+              <a
+                href={`https://www.coingecko.com/en/coins/${nativeDenom.coinGeckoId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-indigo-400"
+              >
+                {nativeDenom.coinDenom}
+              </a>
+            </div>
+            <div className="flex-[4] px-4 py-3 text-xs font-mono">
+              <div className="flex justify-center items-center gap-2">
+                <a target="_blank" href={redirectUrl}>
+                  {nodeHostName}
+                </a>
+                <ArrowSquareOut size={16} weight="bold" />
+              </div>
+            </div>
+            <div className="flex-[2] px-4 py-3">
+              <div className="flex items-center justify-center">
+                {chainsInWallet[chain.chainRegistryPath] ? (
+                  <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-24">
+                    <Check size={16} weight="bold" />
+                    <span>Added</span>
+                  </div>
+                ) : (
+                  <button
+                    onClick={async () => {
+                      if (!window.leap) {
+                        window.open(leapWalletChromeStoreURL, '_blank')
+                        return
+                      }
+                      try {
+                        await window.leap.experimentalSuggestChain(chain)
+                      } catch (e) {
+                        if (e instanceof Error) {
+                          const message = e.message
+                          toast.error(() => {
+                            return (
+                              <div className="flex flex-col">
+                                <strong>Failed to Add Chain</strong>
+                                <p className="text-sm">{message}</p>
+                              </div>
+                            )
+                          })
+                        } else {
+                          toast.error('Failed to add chain')
+                        }
+                      }
+                    }}
+                    className="border-2 text-gray-500 bg-gray-400/10 border-gray-400/50 rounded-full flex items-center justify-center gap-1 w-24"
+                  >
+                    <Plus size={16} weight="bold" />
+                    <span>Add</span>
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
+
+const DebouncedInput = ({
+  value,
+  onChange,
+  timeout,
+  ...props
+}: {
+  value: string
+  onChange: (value: string) => void
+  timeout?: number
+  [key: string]: any
+}) => {
+  const [localValue, setLocalValue] = useState<string>(value)
+
+  const debouncedValue = useDebounce(localValue, timeout ?? 500)
+
+  useEffect(() => {
+    setLocalValue(value)
+  }, [value])
+
+  useEffect(() => {
+    onChange(debouncedValue)
+  }, [debouncedValue, onChange])
+
+  return (
+    <input
+      {...props}
+      value={localValue}
+      onChange={(e) => {
+        setLocalValue(e.target.value)
+      }}
+    />
+  )
+}
+
+const Toggle: React.FC<{
+  checked: boolean
+  onChange: React.Dispatch<React.SetStateAction<boolean>>
+  disabled?: boolean
+}> = ({ checked, onChange, disabled }) => {
+  return (
+    <button
+      className={`rounded-full w-8 h-5 p-[2px] ${
+        checked ? 'bg-green-400' : 'bg-gray-400'
+      }`}
+      disabled={disabled}
+      onClick={() => onChange((v) => !v)}
+    >
+      <div
+        className={`rounded-full transition-transform h-full aspect-square bg-white ${
+          checked ? 'translate-x-3' : 'translate-x-0'
+        }`}
+      />
+    </button>
+  )
+}
+
+const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
+  const [searchQuery, setSearchQuery] = useState<string>('')
+  const [hideActiveChains, setHideActiveChains] = useState(false)
+
+  const fuse = useRef(
+    new Fuse(chains, {
+      keys: ['chainId', 'chainName']
+    })
+  )
+
+  const chainsInWallet = useChainsInWallet()
+
+  const chainsToShow = useMemo(() => {
+    const queryResults = !searchQuery
+      ? chains
+      : fuse.current.search(searchQuery).map((result) => result.item)
+
+    if (!hideActiveChains) {
+      return queryResults
+    }
+    return queryResults.filter(
+      (chain) => !chainsInWallet[chain.chainRegistryPath]
+    )
+  }, [searchQuery, chains, hideActiveChains, chainsInWallet])
+
+  return (
+    <>
+      <div className="relative w-full max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+        <div className="flex items-center gap-4 mt-2 w-full">
+          <label htmlFor="search">
+            <MagnifyingGlass size={20} weight="duotone" />
+            <div className="sr-only">Search</div>
+          </label>
+          <DebouncedInput
+            timeout={250}
+            type="text"
+            id="search"
+            placeholder="Search for a chain"
+            className="w-80 text-gray-900 bg-transparent outline-none border-b border-transparent focus:border-gray-800 transition-colors duration-200"
+            value={searchQuery}
+            onChange={setSearchQuery}
+          />
+        </div>
+        <div className="flex items-center gap-2">
+          <p className="whitespace-nowrap">Hide Active Chains</p>
+          <Toggle checked={hideActiveChains} onChange={setHideActiveChains} />
+        </div>
+      </div>
+      <div className="mt-4 relative w-full max-w-5xl mx-auto max-h-full rounded-xl bg-gradient-to-r from-fuchsia-400 via-blue-500 to-purple-500 p-[2px] glowy-bg">
+        <div className="rounded-[10px] bg-white h-full overflow-y-auto">
+          <div className="w-full p-2">
+            <TableHeader />
+            <TableBody chains={chainsToShow} />
+          </div>
+          {chainsToShow.length == 0 ? (
+            <div className="w-full flex flex-col justify-center items-center pt-6 pb-10 gap-2 text-gray-900">
+              <LinkBreak weight="bold" size={32} />
+              <p className="">No chains found</p>
+            </div>
+          ) : null}
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
+  useEffect(() => {
+    if (!window.leap) {
+      const id = toast.error(
+        () => {
+          return (
+            <div className="flex flex-col">
+              <strong>Leap Wallet Not Detected</strong>
+              <p className="text-sm">
+                You can install it from{' '}
+                <a
+                  href={leapWalletChromeStoreURL}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-400 underline"
+                >
+                  here
+                </a>
+              </p>
+            </div>
+          )
+        },
+        {
+          duration: Infinity
+        }
+      )
+      return () => {
+        toast.dismiss(id)
+      }
+    }
+  }, [])
+
   return (
     <>
       <Head>
@@ -15,12 +318,47 @@ export default function ChainStore() {
             <span className="text-gray-900">Store</span>
           </>
         }
-        subtitle="Generate deep links for Leap's dApp Browser"
+        subtitle="Keep Your Leap Wallet Updated with the Latest Chains"
       >
-        <main className="p-4 max-h-full">
-          <ComingSoon />
+        <PageBanner>
+          <p className="text-sm sm:text-base">
+            🛠️ Developers looking to list a chain
+            <a
+              href="https://github.com/leapwallet/developers"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline ml-1 font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
+            >
+              click here
+            </a>
+          </p>
+        </PageBanner>
+        <main className="px-4 mt-6">
+          <ChainsTable chains={chains} />
         </main>
       </StandardLayout>
     </>
   )
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  let fileUrl = import.meta.url
+  if (fileUrl.startsWith('file://')) {
+    fileUrl = fileUrl.slice(7)
+  }
+  const fileDir = dirname(fileUrl)
+  const dirPath = join(fileDir, '../data/chain-store')
+  const dirData = await readdir(dirPath)
+  const chainData: SuggestChainData[] = await Promise.all(
+    dirData.map(async (file) => {
+      const data = await readFile(join(dirPath, file), 'utf-8')
+      return JSON.parse(data)
+    })
+  )
+
+  return {
+    props: {
+      chains: chainData
+    }
+  }
 }
