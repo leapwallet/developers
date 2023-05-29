@@ -26,8 +26,8 @@ const leapWalletChromeStoreURL =
 const TableHeader = () => (
   <div className="flex items-center w-full text-gray-500 font-medium">
     <p className="flex-[4] p-4 text-left">Chain</p>
-    <p className="flex-[2] p-4 text-left">Currency</p>
-    <p className="flex-[4] p-4 text-center">Node Provider</p>
+    <p className="hidden sm:block flex-[2] p-4 text-left">Currency</p>
+    <p className="hidden sm:block flex-[4] p-4 text-center">Node Provider</p>
     <p className="flex-[2] p-4 text-center">Status</p>
   </div>
 )
@@ -48,24 +48,33 @@ const TableBody: React.FC<{
 
         return (
           <div key={chain.chainId} className="flex items-center w-full">
-            <div className="flex-[4] px-4 py-3 flex items-center gap-4">
-              <Image
-                alt="chain logo"
-                src={chain.chainSymbolImageUrl}
-                width={32}
-                height={32}
-                onError={(e) => {
-                  e.currentTarget.src = ChainImg.src
-                  e.currentTarget.onerror = null
-                  e.currentTarget.classList.add('bg-gray-100')
-                  e.currentTarget.classList.add('p-[3px]')
-                  e.currentTarget.classList.add('border')
-                }}
-                className="rounded-full"
-              />
-              <span>{chain.chainName}</span>
+            <div className="flex-[4] px-3 py-2 sm:px-4 sm:py-3 flex items-center">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <div className="relative rounded-full overflow-hidden w-6 sm:w-8 md:w-9 h-6 sm:h-8 md:h-9 border">
+                  <Image
+                    alt="chain logo"
+                    src={chain.chainSymbolImageUrl}
+                    fill={true}
+                    onError={(e) => {
+                      e.currentTarget.onerror = null
+                      e.currentTarget.src = ChainImg.src
+                      e.currentTarget.classList.add('bg-gray-100')
+                      e.currentTarget.classList.add('p-1')
+                      e.currentTarget.classList.add('border')
+                    }}
+                  />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm sm:text-base">
+                    {chain.chainName}
+                  </span>
+                  <span className="sm:hidden text-xs text-gray-400">
+                    {nativeDenom.coinDenom}
+                  </span>
+                </div>
+              </div>
             </div>
-            <div className="flex-[2] px-4 py-3 text-left">
+            <div className="hidden sm:block flex-[2] px-3 py-2 sm:px-4 sm:py-3 text-left">
               <a
                 href={`https://www.coingecko.com/en/coins/${nativeDenom.coinGeckoId}`}
                 target="_blank"
@@ -75,7 +84,7 @@ const TableBody: React.FC<{
                 {nativeDenom.coinDenom}
               </a>
             </div>
-            <div className="flex-[4] px-4 py-3 text-xs font-mono">
+            <div className="hidden sm:block flex-[4] px-3 py-2 sm:px-4 sm:py-3 text-xs font-mono">
               <div className="flex justify-center items-center gap-2">
                 <a target="_blank" href={redirectUrl}>
                   {nodeHostName}
@@ -83,10 +92,10 @@ const TableBody: React.FC<{
                 <ArrowSquareOut size={16} weight="bold" />
               </div>
             </div>
-            <div className="flex-[2] px-4 py-3">
+            <div className="flex-[2] px-3 py-2 sm:px-4 sm:py-3">
               <div className="flex items-center justify-center">
                 {chainsInWallet[chain.chainRegistryPath] ? (
-                  <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-24">
+                  <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base">
                     <Check size={16} weight="bold" />
                     <span>Added</span>
                   </div>
@@ -115,7 +124,7 @@ const TableBody: React.FC<{
                         }
                       }
                     }}
-                    className="border-2 text-gray-500 bg-gray-400/10 border-gray-400/50 rounded-full flex items-center justify-center gap-1 w-24"
+                    className="border-2 text-gray-500 bg-gray-400/10 border-gray-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base"
                   >
                     <Plus size={16} weight="bold" />
                     <span>Add</span>
@@ -168,19 +177,19 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
             type="text"
             id="search"
             placeholder="Search for a chain"
-            className="w-80 text-gray-900 bg-transparent outline-none border-b border-transparent focus:border-gray-800 transition-colors duration-200"
+            className="w-full sm:w-80 text-gray-900 bg-transparent outline-none border-b border-transparent focus:border-gray-800 transition-colors duration-200"
             value={searchQuery}
             onChange={setSearchQuery}
           />
         </div>
-        <div className="flex items-center gap-2">
+        <div className="hidden sm:flex items-center gap-2">
           <p className="whitespace-nowrap">Hide Active Chains</p>
           <Toggle checked={hideActiveChains} onChange={setHideActiveChains} />
         </div>
       </div>
       <div className="mt-4 relative w-full max-w-5xl mx-auto max-h-full rounded-xl bg-gradient-to-r from-fuchsia-400 via-blue-500 to-purple-500 p-[2px] glowy-bg">
         <div className="rounded-[10px] bg-white h-full overflow-y-auto">
-          <div className="w-full p-2">
+          <div className="w-full sm:p-2">
             <TableHeader />
             <TableBody chains={chainsToShow} />
           </div>
@@ -255,7 +264,7 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
             </a>
           </p>
         </PageBanner>
-        <main className="px-4 mt-6">
+        <main className="px-4 sm:mt-6">
           <ChainsTable chains={chains} />
         </main>
       </StandardLayout>
