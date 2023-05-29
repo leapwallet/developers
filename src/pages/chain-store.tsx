@@ -12,38 +12,16 @@ import Fuse from 'fuse.js'
 import ChainImg from '~/assets/chain-image.svg'
 import { PageBanner } from '~/components/page-banner'
 import { StandardLayout } from '~/layouts/standard'
-import { useDebounce } from '~/hooks/use-debounce'
 import { toast } from 'react-hot-toast'
 import { GetStaticProps } from 'next'
 import { readFile, readdir } from 'fs/promises'
 import { dirname, join } from 'path'
+import { useChainsInWallet } from '~/hooks/use-chains-in-wallet'
+import { DebouncedInput } from '~/components/debounced-input'
+import { Toggle } from '~/components/toggle'
 
 const leapWalletChromeStoreURL =
   'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg'
-
-function useChainsInWallet() {
-  const [chainsInWallet, setChainsInWallet] = useState<Record<string, boolean>>(
-    {}
-  )
-
-  useEffect(() => {
-    if (!window.leap) return
-    window.leap
-      .getSupportedChains()
-      .then((chains) => {
-        const supportedChainsObject: Record<string, boolean> = {}
-        chains.forEach((chain) => {
-          supportedChainsObject[chain] = true
-        })
-        setChainsInWallet(supportedChainsObject)
-      })
-      .catch((err) => {
-        console.error(err)
-      })
-  }, [])
-
-  return chainsInWallet
-}
 
 const TableHeader = () => (
   <div className="flex items-center w-full text-gray-500 font-medium">
@@ -149,62 +127,6 @@ const TableBody: React.FC<{
         )
       })}
     </div>
-  )
-}
-
-const DebouncedInput = ({
-  value,
-  onChange,
-  timeout,
-  ...props
-}: {
-  value: string
-  onChange: (value: string) => void
-  timeout?: number
-  [key: string]: any
-}) => {
-  const [localValue, setLocalValue] = useState<string>(value)
-
-  const debouncedValue = useDebounce(localValue, timeout ?? 500)
-
-  useEffect(() => {
-    setLocalValue(value)
-  }, [value])
-
-  useEffect(() => {
-    onChange(debouncedValue)
-  }, [debouncedValue, onChange])
-
-  return (
-    <input
-      {...props}
-      value={localValue}
-      onChange={(e) => {
-        setLocalValue(e.target.value)
-      }}
-    />
-  )
-}
-
-const Toggle: React.FC<{
-  checked: boolean
-  onChange: React.Dispatch<React.SetStateAction<boolean>>
-  disabled?: boolean
-}> = ({ checked, onChange, disabled }) => {
-  return (
-    <button
-      className={`rounded-full w-8 h-5 p-[2px] ${
-        checked ? 'bg-green-400' : 'bg-gray-400'
-      }`}
-      disabled={disabled}
-      onClick={() => onChange((v) => !v)}
-    >
-      <div
-        className={`rounded-full transition-transform h-full aspect-square bg-white ${
-          checked ? 'translate-x-3' : 'translate-x-0'
-        }`}
-      />
-    </button>
   )
 }
 
