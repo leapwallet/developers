@@ -19,6 +19,7 @@ import { dirname, join } from 'path'
 import { useChainsInWallet } from '~/hooks/use-chains-in-wallet'
 import { DebouncedInput } from '~/components/debounced-input'
 import { Toggle } from '~/components/toggle'
+import { SuggestChainData } from '~/lib/types'
 
 const leapWalletChromeStoreURL =
   'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg'
@@ -40,11 +41,11 @@ const TableBody: React.FC<{
   return (
     <div className="w-full">
       {chains.map((chain) => {
-        const nodeURL = new URL(chain.apis.rpc)
+        const nodeURL = new URL(chain.rpc)
         const nodeOrigin = nodeURL.origin
         const nodeHostName = nodeURL.hostname
-        const redirectUrl = `${nodeOrigin}/${chain.chainRegistryPath}`
-        const nativeDenom = Object.values(chain.nativeDenoms)[0]
+        const redirectUrl = `${nodeOrigin}/${chain.bech32Config.bech32PrefixAccAddr}`
+        const nativeDenom = chain.stakeCurrency
 
         return (
           <div key={chain.chainId} className="flex items-center w-full">
@@ -53,7 +54,7 @@ const TableBody: React.FC<{
                 <div className="relative rounded-full overflow-hidden w-6 sm:w-8 md:w-9 h-6 sm:h-8 md:h-9 border">
                   <Image
                     alt="chain logo"
-                    src={chain.chainSymbolImageUrl}
+                    src={chain.image}
                     fill={true}
                     onError={(e) => {
                       e.currentTarget.onerror = null
@@ -94,7 +95,7 @@ const TableBody: React.FC<{
             </div>
             <div className="flex-[2] px-3 py-2 sm:px-4 sm:py-3">
               <div className="flex items-center justify-center">
-                {chainsInWallet[chain.chainRegistryPath] ? (
+                {chainsInWallet[chain.bech32Config.bech32PrefixAccAddr] ? (
                   <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base">
                     <Check size={16} weight="bold" />
                     <span>Added</span>
@@ -160,7 +161,7 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
       return queryResults
     }
     return queryResults.filter(
-      (chain) => !chainsInWallet[chain.chainRegistryPath]
+      (chain) => !chainsInWallet[chain.bech32Config.bech32PrefixAccAddr]
     )
   }, [searchQuery, chains, hideActiveChains, chainsInWallet])
 
@@ -278,7 +279,7 @@ export const getStaticProps: GetStaticProps = async () => {
     fileUrl = fileUrl.slice(7)
   }
   const fileDir = dirname(fileUrl)
-  const dirPath = join(fileDir, '../data/chain-store')
+  const dirPath = join(fileDir, '../../data/chain-store')
   const dirData = await readdir(dirPath)
   const chainData: SuggestChainData[] = await Promise.all(
     dirData.map(async (file) => {
