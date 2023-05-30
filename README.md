@@ -1,38 +1,90 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# leap developer portal
 
-## Getting Started
+This is the open source developer portal for [LeapWallet](https://leapwallet.io). We have built a developer portal to help developers build on top of LeapWallet. This effort will hopefully improve the existing cosmos ecosystem and serve our thousands of users better!
 
-First, run the development server:
+## Development
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+Follow the steps below to run the developer portal locally -
+
+1. Clone the repo
+   ```sh
+   git clone
+    ```
+2. Install NPM packages
+    ```sh
+    npm install
+    ```
+3. Run the app
+   ```sh
+   npm run dev
+   ```
+4. Open [http://localhost:3000/developers](http://localhost:3000/developers) on your favorite browser.
+
+## Contributing
+
+Fork the repo (or if you have write access to the repo create a branch) and make your changes. Once you are done, submit a pull request and we will review your changes.
+
+### Add a Chain
+
+If you are looking to add a new chain to the Chain Store, please follow the steps below:
+
+1. Create an issue with the name "Add Chain Logo - <chain-id>".
+2. Upload the logo of the chain in the issue. One of the maintainers will add the logo to leap's assets cdn.
+3. Start a PR with the name "Add <chain-id> to Chain Store".
+4. Add the chain data to `data/chain-store` folder with the name `<chain-id>.json`. You can use the chain logo from step 2. Data format is given [below](#chain-data-structure).
+5. Automated checks will be run on the PR. If the checks pass, the PR will be reviewed by one of the maintainers.
+6. Once reviewed and approved, the PR will be merged and the chain will be added to the Chain Store.
+
+### Chain Data Structure
+
+```json
+{
+  "chainId": "osmosis-1",
+  "chainName": "Osmosis",
+  "image": "https://assets.leapwallet.io/osmo.svg",
+  "rest": "https://rest.cosmos.directory/osmosis",
+  "rpc": "https://rpc.cosmos.directory/osmosis",
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "osmosis",
+    "bech32PrefixAccPub": "osmosispub",
+    "bech32PrefixValAddr": "osmosisvaloper",
+    "bech32PrefixValPub": "osmosisvaloperpub",
+    "bech32PrefixConsAddr": "osmosisvalcons",
+    "bech32PrefixConsPub": "osmosisvalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "OSMO",
+      "coinMinimalDenom": "uosmo",
+      "coinDecimals": 6,
+      "coinGeckoId": "osmosis"
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "OSMO",
+      "coinMinimalDenom": "uosmo",
+      "coinDecimals": 6,
+      "coinGeckoId": "osmosis",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.03
+      }
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "OSMO",
+    "coinMinimalDenom": "uosmo",
+    "coinDecimals": 6,
+    "coinGeckoId": "osmosis"
+  }
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## License
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Distributed under the MIT License. See [license](license) for more information.
