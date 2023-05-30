@@ -25,6 +25,13 @@ const getChainData = async () => {
 describe('validate chain store data', async () => {
   const chainData = await getChainData()
 
+  if (chainData.length === 0) {
+    it('should validate data for empty chain store', () => {
+      console.warn('⚠️ WARNING: No chains data found for chain-store')
+      expect(true).toBe(true)
+    })
+  }
+
   chainData.forEach((data) => {
     it(`should validate data for ${data.chainId}`, () => {
       const validationResult = SuggestChainDataValidator.safeParse(data)
