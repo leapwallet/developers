@@ -257,7 +257,7 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
           <p className="text-sm sm:text-base">
             🛠️ Developers looking to list a chain
             <a
-              href="https://github.com/leapwallet/developers"
+              href="https://github.com/leapwallet/developers/tree/chain-store#add-a-chain"
               target="_blank"
               rel="noopener noreferrer"
               className="underline ml-1 font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
