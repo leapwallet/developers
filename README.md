@@ -28,7 +28,7 @@ Fork the repo (or if you have write access to the repo create a branch) and make
 
 If you are looking to add a new chain to the Chain Store, please follow the steps below:
 
-1. Create an issue with the name "Add Chain Logo - `<chain-id>`".
+1. Create a [new issue (by clicking here)](https://github.com/leapwallet/developers/issues/new?assignees=&labels=enhancement&projects=&template=add-chain.md&title=Add+Chain+-+%3Cchain-id%3E) with the name "Add Chain - `<chain-id>`".
 2. Upload the logo of the chain in the issue. One of the maintainers will add the logo to leap's assets cdn.
 3. Start a PR with the name "Add `<chain-id>` to Chain Store".
 4. Add the chain data to `data/chain-store` folder with the name `<chain-id>.json`. You can use the chain logo from step 2. Data format is given [below](#chain-data-structure).

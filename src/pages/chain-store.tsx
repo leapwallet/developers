@@ -52,7 +52,7 @@ const TableBody: React.FC<{
           <div key={chain.chainId} className="flex items-center w-full">
             <div className="flex-[4] px-3 py-2 sm:px-4 sm:py-3 flex items-center">
               <div className="flex items-center gap-2 sm:gap-4">
-                <div className="relative rounded-full overflow-hidden w-6 sm:w-8 md:w-9 h-6 sm:h-8 md:h-9 border">
+                <div className="relative rounded-full overflow-hidden w-7 sm:w-8 md:w-9 h-7 sm:h-8 md:h-9 border">
                   <Image
                     alt="chain logo"
                     src={chain.image}
