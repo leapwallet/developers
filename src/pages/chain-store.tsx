@@ -7,20 +7,18 @@ import {
 } from '@phosphor-icons/react'
 import Head from 'next/head'
 import Image from 'next/image'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import Fuse from 'fuse.js'
 import ChainImg from '~/assets/chain-image.svg'
 import { PageBanner } from '~/components/page-banner'
 import { StandardLayout } from '~/layouts/standard'
 import { toast } from 'react-hot-toast'
 import { GetStaticProps } from 'next'
-import { readFile, readdir } from 'fs/promises'
-import { dirname, join } from 'path'
-import { useChainsInWallet } from '~/hooks/use-chains-in-wallet'
 import { DebouncedInput } from '~/components/debounced-input'
 import { Toggle } from '~/components/toggle'
 import { SuggestChainData } from '~/lib/types'
 import { getChainsData } from '~/server/utils'
+import { LeapProvider, useLeapContext } from '~/context/leap'
 
 const leapWalletChromeStoreURL =
   'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg'
@@ -37,7 +35,36 @@ const TableHeader = () => (
 const TableBody: React.FC<{
   chains: SuggestChainData[]
 }> = ({ chains }) => {
-  const chainsInWallet = useChainsInWallet()
+  const { supportedChains, fetchSupportedChains } = useLeapContext()
+
+  const handleAddChain = useCallback(
+    async (chain: SuggestChainData) => {
+      if (!window.leap) {
+        window.open(leapWalletChromeStoreURL, '_blank')
+        return
+      }
+      try {
+        await window.leap.experimentalSuggestChain(chain)
+        toast.success('Chain added successfully')
+        await fetchSupportedChains()
+      } catch (e) {
+        if (e instanceof Error) {
+          const message = e.message
+          toast.error(() => {
+            return (
+              <div className="flex flex-col">
+                <strong>Failed to Add Chain</strong>
+                <p className="text-sm">{message}</p>
+              </div>
+            )
+          })
+        } else {
+          toast.error('Failed to add chain')
+        }
+      }
+    },
+    [fetchSupportedChains]
+  )
 
   return (
     <div className="w-full">
@@ -96,42 +123,41 @@ const TableBody: React.FC<{
             </div>
             <div className="flex-[2] px-3 py-2 sm:px-4 sm:py-3">
               <div className="flex items-center justify-center">
-                {chainsInWallet[chain.bech32Config.bech32PrefixAccAddr] ? (
-                  <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base">
-                    <Check size={16} weight="bold" />
-                    <span>Added</span>
-                  </div>
-                ) : (
-                  <button
-                    onClick={async () => {
-                      if (!window.leap) {
-                        window.open(leapWalletChromeStoreURL, '_blank')
-                        return
-                      }
-                      try {
-                        await window.leap.experimentalSuggestChain(chain)
-                      } catch (e) {
-                        if (e instanceof Error) {
-                          const message = e.message
-                          toast.error(() => {
-                            return (
-                              <div className="flex flex-col">
-                                <strong>Failed to Add Chain</strong>
-                                <p className="text-sm">{message}</p>
-                              </div>
-                            )
-                          })
-                        } else {
-                          toast.error('Failed to add chain')
-                        }
-                      }
-                    }}
-                    className="border-2 text-gray-500 bg-gray-400/10 border-gray-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base"
-                  >
-                    <Plus size={16} weight="bold" />
-                    <span>Add</span>
-                  </button>
-                )}
+                {(() => {
+                  switch (supportedChains.status) {
+                    case 'loading':
+                      return (
+                        <div className="flex items-center justify-center gap-2">
+                          <div className="w-20 sm:w-24 h-7 animate-pulse bg-gray-200/75 rounded-full border-gray-400/10" />
+                        </div>
+                      )
+                    case 'success':
+                      return supportedChains.data[
+                        chain.bech32Config.bech32PrefixAccAddr
+                      ] ? (
+                        <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base">
+                          <Check size={16} weight="bold" />
+                          <span>Added</span>
+                        </div>
+                      ) : (
+                        <button
+                          onClick={() => handleAddChain(chain)}
+                          className="border-2 text-gray-500 bg-gray-400/10 border-gray-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base"
+                        >
+                          <Plus size={16} weight="bold" />
+                          <span>Add</span>
+                        </button>
+                      )
+                    case 'error':
+                      return (
+                        <div className="flex items-center justify-center gap-2">
+                          <span className="text-xs text-gray-400 font-medium">
+                            Not Available
+                          </span>
+                        </div>
+                      )
+                  }
+                })()}
               </div>
             </div>
           </div>
@@ -151,7 +177,7 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
     })
   )
 
-  const chainsInWallet = useChainsInWallet()
+  const { supportedChains } = useLeapContext()
 
   const chainsToShow = useMemo(() => {
     const queryResults = !searchQuery
@@ -161,10 +187,13 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
     if (!hideActiveChains) {
       return queryResults
     }
-    return queryResults.filter(
-      (chain) => !chainsInWallet[chain.bech32Config.bech32PrefixAccAddr]
-    )
-  }, [searchQuery, chains, hideActiveChains, chainsInWallet])
+    if (supportedChains.status === 'success') {
+      return queryResults.filter(
+        (chain) => !supportedChains.data[chain.bech32Config.bech32PrefixAccAddr]
+      )
+    }
+    return queryResults
+  }, [searchQuery, chains, hideActiveChains, supportedChains])
 
   return (
     <>
@@ -209,8 +238,9 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
 
 export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
   useEffect(() => {
+    let id: string | undefined = undefined
     if (!window.leap) {
-      const id = toast.error(
+      id = toast.error(
         () => {
           return (
             <div className="flex flex-col">
@@ -233,7 +263,9 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
           duration: Infinity
         }
       )
-      return () => {
+    }
+    return () => {
+      if (id) {
         toast.dismiss(id)
       }
     }
@@ -251,13 +283,13 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
             <span className="text-gray-900">Store</span>
           </>
         }
-        subtitle="Keep Your Leap Wallet Updated with the Latest Chains"
+        subtitle="Add Latest Cosmos Chains to Your Leap Wallet"
       >
         <PageBanner>
           <p className="text-sm sm:text-base">
             🛠️ Developers looking to list a chain
             <a
-              href="https://github.com/leapwallet/developers/tree/chain-store#add-a-chain"
+              href="https://github.com/leapwallet/developers/#add-a-chain"
               target="_blank"
               rel="noopener noreferrer"
               className="underline ml-1 font-medium text-indigo-600 hover:text-indigo-500 transition-colors duration-200"
@@ -266,9 +298,11 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
             </a>
           </p>
         </PageBanner>
-        <main className="px-4 sm:mt-6">
-          <ChainsTable chains={chains} />
-        </main>
+        <LeapProvider>
+          <main className="px-4 sm:mt-6">
+            <ChainsTable chains={chains} />
+          </main>
+        </LeapProvider>
       </StandardLayout>
     </>
   )
