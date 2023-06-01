@@ -19,9 +19,7 @@ import { Toggle } from '~/components/toggle'
 import { SuggestChainData } from '~/lib/types'
 import { getChainsData } from '~/server/utils'
 import { LeapProvider, useLeapContext } from '~/context/leap'
-
-const leapWalletChromeStoreURL =
-  'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg'
+import { checkLeapInstallation } from '~/lib/leap'
 
 const TableHeader = () => (
   <div className="flex items-center w-full text-gray-500 font-medium">
@@ -40,7 +38,6 @@ const TableBody: React.FC<{
   const handleAddChain = useCallback(
     async (chain: SuggestChainData) => {
       if (!window.leap) {
-        window.open(leapWalletChromeStoreURL, '_blank')
         return
       }
       try {
@@ -238,37 +235,8 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
 
 export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
   useEffect(() => {
-    let id: string | undefined = undefined
-    if (!window.leap) {
-      id = toast.error(
-        () => {
-          return (
-            <div className="flex flex-col">
-              <strong>Leap Wallet Not Detected</strong>
-              <p className="text-sm">
-                You can install it from{' '}
-                <a
-                  href={leapWalletChromeStoreURL}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-indigo-400 underline"
-                >
-                  here
-                </a>
-              </p>
-            </div>
-          )
-        },
-        {
-          duration: Infinity
-        }
-      )
-    }
-    return () => {
-      if (id) {
-        toast.dismiss(id)
-      }
-    }
+    const timeout = setTimeout(checkLeapInstallation, 500)
+    return () => clearTimeout(timeout)
   }, [])
 
   return (
