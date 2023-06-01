@@ -30,10 +30,12 @@ If you are looking to add a new chain to the Chain Store, please follow the step
 
 1. Create a [new issue (by clicking here)](https://github.com/leapwallet/developers/issues/new?assignees=&labels=enhancement&projects=&template=add-chain.md&title=Add+Chain+-+%3Cchain-id%3E) with the name "Add Chain - `<chain-id>`".
 2. Upload the logo of the chain in the issue. One of the maintainers will add the logo to leap's assets cdn.
-3. Start a PR with the name "Add `<chain-id>` to Chain Store".
+3. Fork the repository and start a PR with the name "Add Chain - `<chain-id>`".
 4. Add the chain data to `data/chain-store` folder with the name `<chain-id>.json`. You can use the chain logo from step 2. Data format is given [below](#chain-data-structure).
-5. Automated checks will be run on the PR. If the checks pass, the PR will be reviewed by one of the maintainers.
-6. Once reviewed and approved, the PR will be merged and the chain will be added to the Chain Store.
+5. Once the chain data is added, run the tests using `npm run test`. If the tests are failing, please fix the errors printed out in the test results.
+6. Once you've made sure that the data is valid, run the project and check if the "Add Chain" button for your chain is working as expected by opening [http://localhost:3000/developers/chain-store](http://localhost:3000/developers/chain-store).
+7. Once you puAutomated checks will be run on the PR. If the checks pass, the PR will be reviewed by one of the maintainers.
+8. Once reviewed and approved, the PR will be merged and the chain will be added to the Chain Store.
 
 #### Guidelines
 
