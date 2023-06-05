@@ -61,20 +61,12 @@ export const StandardLayout: React.FC<Props> = ({
             Home
           </Link>
           <a
-            href="http://leapwallet.io/terms"
+            href="https://twitter.com/leap_cosmos"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-600"
           >
-            Terms
-          </a>
-          <a
-            href="http://leapwallet.io/privacy"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-gray-600"
-          >
-            Privacy
+            Twitter
           </a>
         </div>
       </footer>

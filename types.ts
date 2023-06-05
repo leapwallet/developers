@@ -1,10 +1,10 @@
 declare global {
   interface Window {
-    leap: {
+    leap?: {
       version: string
       mode: string
       getSupportedChains: () => Promise<string[]>
-      experimentalSuggestChain: () => Promise<void>
+      experimentalSuggestChain: (args: any) => Promise<void>
     }
   }
 }

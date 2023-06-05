@@ -1,0 +1,35 @@
+name: 📝 PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  run-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
+      - name: ⬇️ Checkout Repo
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '18'
+
+      - name: 📥 Install Dependencies
+        run: npm install
+
+      - name: 📝 Linting
+        run: npm run lint
+
+      - name: 🛠️ Run Tests
+        run: npm run test -- run
+
+      - name: 🏗️ Website Builds Successfully
+        run: npm run build
