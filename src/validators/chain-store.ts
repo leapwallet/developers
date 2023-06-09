@@ -44,6 +44,14 @@ export const SuggestChainDataValidator = z.object({
   feeCurrencies: z.array(FeeCurrencyValidator),
   features: z.array(z.string()).optional(),
   walletUrlForStaking: z.string().optional(),
+  txExplorer: z
+    .object({
+      mainnet: z.object({
+        name: z.string(),
+        txUrl: z.string().url()
+      })
+    })
+    .optional(),
   theme: z
     .object({
       primaryColor: z.string(),

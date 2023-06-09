@@ -1,0 +1,56 @@
+{
+  "chainId": "meme-1",
+  "chainName": "Meme",
+  "rest": "https://rest.cosmos.directory/meme",
+  "rpc": "https://rpc.cosmos.directory/meme",
+  "image": "https://assets.leapwallet.io/meme.svg",
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "meme",
+    "bech32PrefixAccPub": "memepub",
+    "bech32PrefixValAddr": "memevaloper",
+    "bech32PrefixValPub": "memevaloperpub",
+    "bech32PrefixConsAddr": "memecvalons",
+    "bech32PrefixConsPub": "memevalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "MEME",
+      "coinMinimalDenom": "umeme",
+      "coinDecimals": 6,
+      "coinGeckoId": "meme-network"
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "MEME",
+    "coinMinimalDenom": "umeme",
+    "coinDecimals": 6,
+    "coinGeckoId": "meme-network"
+  },
+  "feeCurrencies": [
+    {
+      "coinDenom": "MEME",
+      "coinMinimalDenom": "umeme",
+      "coinDecimals": 6,
+      "coinGeckoId": "meme-network",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "txExplorer": {
+    "mainnet": {
+      "name": "Atomscan",
+      "txUrl": "https://atomscan.com/meme/transactions"
+    }
+  },
+  "theme": {
+    "gradient": "linear-gradient(180deg, rgba(120, 91, 246, 0.32) 0%, rgba(120, 91, 246, 0) 100%)",
+    "primaryColor": "#785bf6"
+  },
+  "features": []
+}

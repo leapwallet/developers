@@ -1,0 +1,8 @@
+{
+  "json.schemas": [
+    {
+      "fileMatch": ["data/chain-store/*.json"],
+      "url": "https://assets.leapwallet.io/dev/chain-store.schema.json"
+    }
+  ]
+}

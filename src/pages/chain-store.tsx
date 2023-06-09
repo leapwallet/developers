@@ -178,7 +178,7 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
 
   const chainsToShow = useMemo(() => {
     const queryResults = !searchQuery
-      ? chains
+      ? [...chains].sort((a, b) => a.chainName.localeCompare(b.chainName))
       : fuse.current.search(searchQuery).map((result) => result.item)
 
     if (!hideActiveChains) {

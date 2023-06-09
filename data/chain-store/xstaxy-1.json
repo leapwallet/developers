@@ -1,0 +1,56 @@
+{
+  "chainId": "xstaxy-1",
+  "chainName": "Aura Network",
+  "rest": "https://rest.cosmos.directory/aura",
+  "rpc": "https://rpc.cosmos.directory/aura",
+  "image": "https://assets.leapwallet.io/aura.svg",
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "aura",
+    "bech32PrefixAccPub": "aurapub",
+    "bech32PrefixValAddr": "auravaloper",
+    "bech32PrefixValPub": "auravaloperpub",
+    "bech32PrefixConsAddr": "auracvalons",
+    "bech32PrefixConsPub": "auravalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "AURA",
+      "coinMinimalDenom": "uaura",
+      "coinDecimals": 6,
+      "coinGeckoId": "aura-network"
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "AURA",
+    "coinMinimalDenom": "uaura",
+    "coinDecimals": 6,
+    "coinGeckoId": "aura-network"
+  },
+  "feeCurrencies": [
+    {
+      "coinDenom": "AURA",
+      "coinMinimalDenom": "uaura",
+      "coinDecimals": 6,
+      "coinGeckoId": "aura-network",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "txExplorer": {
+    "mainnet": {
+      "name": "Aurascan",
+      "txUrl": "https://aurascan.io/transaction"
+    }
+  },
+  "theme": {
+    "gradient": "linear-gradient(180deg, rgba(134, 208, 206, 0.32) 0%, rgba(134, 208, 206, 0) 100%)",
+    "primaryColor": "#86d0ce"
+  },
+  "features": []
+}
