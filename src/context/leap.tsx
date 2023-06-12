@@ -4,6 +4,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState
 } from 'react'
 import toast from 'react-hot-toast'
@@ -23,6 +24,8 @@ type QueryData<T> =
 export const LeapProvider: React.FC<React.PropsWithChildren> = ({
   children
 }) => {
+  const retryCount = useRef(0)
+
   const [supportedChains, setSupportedChains] = useState<
     QueryData<SupportedChainsRecord>
   >({ status: 'loading' })
@@ -76,16 +79,17 @@ export const LeapProvider: React.FC<React.PropsWithChildren> = ({
   }, [fetchSupportedChains])
 
   useEffect(() => {
-    if (supportedChains.status === 'error') {
+    if (supportedChains.status === 'error' && retryCount.current < 3) {
       const timeoutId = setTimeout(() => {
         fetchSupportedChains()
+        retryCount.current += 1
       }, 500)
 
       return () => {
         clearTimeout(timeoutId)
       }
     }
-  }, [supportedChains.status, fetchSupportedChains])
+  }, [supportedChains, fetchSupportedChains])
 
   const value = useMemo(
     () => ({
