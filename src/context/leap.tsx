@@ -75,6 +75,18 @@ export const LeapProvider: React.FC<React.PropsWithChildren> = ({
     fetchSupportedChains()
   }, [fetchSupportedChains])
 
+  useEffect(() => {
+    if (supportedChains.status === 'error') {
+      const timeoutId = setTimeout(() => {
+        fetchSupportedChains()
+      }, 500)
+
+      return () => {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [supportedChains.status, fetchSupportedChains])
+
   const value = useMemo(
     () => ({
       supportedChains,
