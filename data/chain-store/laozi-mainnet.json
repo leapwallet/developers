@@ -52,5 +52,6 @@
     "gradient": "linear-gradient(180deg, rgba(120, 91, 246, 0.32) 0%, rgba(120, 91, 246, 0) 100%)",
     "primaryColor": "#785bf6"
   },
+  "chainRegistryPath": "bandchain",
   "features": []
 }

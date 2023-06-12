@@ -52,5 +52,6 @@
     "gradient": "linear-gradient(180deg, rgba(134, 208, 206, 0.32) 0%, rgba(134, 208, 206, 0) 100%)",
     "primaryColor": "#86d0ce"
   },
+  "chainRegistryPath": "aura",
   "features": []
 }
