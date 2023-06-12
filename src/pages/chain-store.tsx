@@ -69,7 +69,7 @@ const TableBody: React.FC<{
         const nodeURL = new URL(chain.rpc)
         const nodeOrigin = nodeURL.origin
         const nodeHostName = nodeURL.hostname
-        const redirectUrl = `${nodeOrigin}/${chain.bech32Config.bech32PrefixAccAddr}`
+        const redirectUrl = `${nodeOrigin}/${chain.chainRegistryPath}`
         const nativeDenom = chain.stakeCurrency
 
         return (
@@ -129,9 +129,7 @@ const TableBody: React.FC<{
                         </div>
                       )
                     case 'success':
-                      return supportedChains.data[
-                        chain.bech32Config.bech32PrefixAccAddr
-                      ] ? (
+                      return supportedChains.data[chain.chainRegistryPath] ? (
                         <div className="border-2 text-teal-500 bg-green-400/10 border-green-400/50 rounded-full flex items-center justify-center gap-1 w-20 sm:w-24 text-sm sm:text-base">
                           <Check size={16} weight="bold" />
                           <span>Added</span>
@@ -186,7 +184,7 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
     }
     if (supportedChains.status === 'success') {
       return queryResults.filter(
-        (chain) => !supportedChains.data[chain.bech32Config.bech32PrefixAccAddr]
+        (chain) => !supportedChains.data[chain.chainRegistryPath]
       )
     }
     return queryResults
