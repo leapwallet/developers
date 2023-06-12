@@ -51,6 +51,9 @@ export const LeapProvider: React.FC<React.PropsWithChildren> = ({
         })
       })
       .catch((err) => {
+        if (retryCount.current > 0) {
+          return
+        }
         if (err instanceof Error) {
           toast.error(() => {
             return (
