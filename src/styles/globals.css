@@ -42,9 +42,27 @@
   font-display: swap;
 }
 
-.glowy-bg {
-  box-shadow: -200px 120px 250px -70px rgba(232, 121, 249, 0.4),
-    150px 0px 350px -30px rgba(129, 140, 248, 0.4);
+.constraint-w {
+  @apply w-full max-w-6xl mx-auto;
+  @apply px-4 sm:px-6;
+}
+
+.glowy-img-bg {
+  background-image: url(/glowy.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+.dotted-bg {
+  background-image: radial-gradient(
+    circle,
+    rgb(197, 198, 200, 0.6) 1px,
+    transparent 1px
+  );
+  background-size: 20px 20px;
+  background-attachment: fixed;
 }
 
 .qr-code > svg {

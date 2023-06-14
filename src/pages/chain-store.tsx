@@ -265,7 +265,7 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
           </p>
         </PageBanner>
         <LeapProvider>
-          <main className="px-4 sm:mt-6">
+          <main className="px-4 sm:mt-6 constraint-w">
             <ChainsTable chains={chains} />
           </main>
         </LeapProvider>
