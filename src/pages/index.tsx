@@ -154,7 +154,7 @@ export default function Home() {
         <title>Developer Hub | LeapWallet</title>
       </Head>
       <div className="dotted-bg">
-        <div className="h-screen w-screen glowy-img-bg overflow-auto">
+        <div className="glowy-img-bg">
           <div
             className="grid grid-cols-1 min-h-screen"
             style={{
