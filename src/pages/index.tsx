@@ -102,7 +102,7 @@ const openSourceCards = [
   {
     title: 'Name Matcha',
     description:
-      'One-stop cosmos domain name & address resolution for your dApp.',
+      'One-stop Cosmos domain name & address resolution for your dApp.',
     image: '🍵',
     githubLink: 'https://github.com/leapwallet/name-matcha',
     packageLink: 'https://www.npmjs.com/package/@leapwallet/name-matcha'
@@ -119,22 +119,22 @@ const openSourceCards = [
 
 const servicesCards = [
   {
-    title: 'Webhooks',
+    title: 'Notifications Webhook',
     description:
-      'On-chain events delivered right to your server. Goodbye polling!',
+      'On-chain Cosmos events delivered right to your server. Goodbye polling!',
     image: '🔔',
     link: '/webhooks'
   },
   {
     title: 'Chain Store',
-    description: 'Add the latest cosmos chains to your LeapWallet.',
+    description: 'Enable support for your Cosmos SDK chain on Leap wallet.',
     image: '⚛️',
     link: '/chain-store'
   },
   {
     title: 'Deeplink Generator',
     description:
-      'Generate deeplinks for your dApp to open in the LeapWallet mobile app.',
+      "Generate deeplinks that open your dapp in Leap's mobile app browser.",
     image: '🔗',
     link: '/deeplink-generator'
   }
