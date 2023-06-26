@@ -1,8 +1,8 @@
 {
   "chainId": "eightball-1",
   "chainName": "8ball",
-  "rest": "https://rest.cosmos.directory/eightball",
-  "rpc": "https://rpc.cosmos.directory/eightball",
+  "rest": "https://rest.cosmos.directory/8ball",
+  "rpc": "https://rpc.cosmos.directory/8ball",
   "image": "https://assets.leapwallet.io/ebl.svg",
   "bip44": {
     "coinType": 118
