@@ -9,16 +9,23 @@ jobs:
   deploy-production:
     runs-on: ubuntu-latest
     steps:
+      - name: 🛑 Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.11.0
+
       - name: ⬇️ Checkout
         uses: actions/checkout@v2
+      
       - name: ⎔ Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '18'
+      
       - name: 📥 Install Deps
         run: yarn install
+      
       - name: 🏗️ Build
         run: yarn build
+      
       - name: Deploy ✈️
         uses: FirebaseExtended/action-hosting-deploy@v0
         with:
