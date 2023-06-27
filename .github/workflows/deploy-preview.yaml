@@ -1,0 +1,28 @@
+name: Deploy Preview Channel
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: ⬇️ Checkout
+        uses: actions/checkout@v2
+      - name: ⎔ Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      - name: 📥 Install Deps
+        run: yarn install
+      - name: 🏗️ Build
+        run: yarn build
+      - name: 🚀 Deploy
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT }}'
+          expires: 7d
+          projectId: leap-developer-portal
