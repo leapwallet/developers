@@ -4,6 +4,7 @@
   "rest": "https://rest.cosmos.directory/8ball",
   "rpc": "https://rpc.cosmos.directory/8ball",
   "image": "https://assets.leapwallet.io/ebl.svg",
+  "chainRegistryPath": "8ball",
   "bip44": {
     "coinType": 118
   },
@@ -49,9 +50,8 @@
     }
   },
   "theme": {
-    "gradient": "linear-gradient(180deg, rgba(48, 107, 242, 0.32) 0%, rgba(48, 107, 242, 0) 100%)",
-    "primaryColor": "#306BF2"
+    "gradient": "linear-gradient(180deg, rgba(50, 129, 250, 0.32) 0%, rgba(50, 129, 250, 0) 100%)",
+    "primaryColor": "#3281fa"
   },
-  "chainRegistryPath": "8ball",
   "features": []
 }

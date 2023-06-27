@@ -75,6 +75,7 @@ const ServiceCard: React.FC<{
             <Link
               title="Github Link"
               href={link}
+              target={link.startsWith('http') ? '_blank' : undefined}
               className="text-sm pl-3 pr-2 flex items-center justify-center border border-gray-200 rounded-lg bg-white/20 backdrop-blur-sm p-1"
             >
               <span>Open</span>
@@ -123,7 +124,7 @@ const servicesCards = [
     description:
       'On-chain Cosmos events delivered right to your server. Goodbye polling!',
     image: '🔔',
-    link: '/webhooks'
+    link: 'https://developer.leapwallet.io'
   },
   {
     title: 'Chain Store',

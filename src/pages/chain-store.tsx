@@ -64,7 +64,7 @@ const TableBody: React.FC<{
   )
 
   return (
-    <div className="w-full">
+    <div className="w-full space-y-2 pt-1 pb-2">
       {chains.map((chain) => {
         const nodeURL = new URL(chain.rpc)
         const nodeOrigin = nodeURL.origin
@@ -265,7 +265,7 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
           </p>
         </PageBanner>
         <LeapProvider>
-          <main className="px-4 sm:mt-6 constraint-w">
+          <main className="px-4 sm:mt-6 constraint-w pb-12">
             <ChainsTable chains={chains} />
           </main>
         </LeapProvider>
