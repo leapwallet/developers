@@ -21,10 +21,10 @@ jobs:
           node-version: '18'
       
       - name: 📥 Install Deps
-        run: yarn install
+        run: npm install
       
       - name: 🏗️ Build
-        run: yarn build
+        run: npm run build
       
       - name: Deploy ✈️
         uses: FirebaseExtended/action-hosting-deploy@v0
