@@ -147,6 +147,14 @@ export default function Home() {
                       }}
                       className="border border-gray-500 rounded-lg p-2"
                       placeholder="https://uniswap.exchange"
+                      onKeyDown={(event) => {
+                        if (
+                          event.key === 'Enter' &&
+                          generatorState === 'idle'
+                        ) {
+                          handleRequestDeepLink()
+                        }
+                      }}
                     />
                     {urlInputHelper ? (
                       <p

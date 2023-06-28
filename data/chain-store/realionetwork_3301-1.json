@@ -1,0 +1,57 @@
+{
+  "chainId": "realionetwork_3301-1",
+  "chainName": "Realio Network",
+  "rest": "https://rest.cosmos.directory/realio",
+  "rpc": "https://rpc.cosmos.directory/realio",
+  "image": "https://assets.leapwallet.io/rio.png",
+  "chainRegistryPath": "realio",
+  "bip44": {
+    "coinType": 60
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "realio",
+    "bech32PrefixAccPub": "realiopub",
+    "bech32PrefixValAddr": "realiovaloper",
+    "bech32PrefixValPub": "realiovaloperpub",
+    "bech32PrefixConsAddr": "realiocvalons",
+    "bech32PrefixConsPub": "realiovalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "RIO",
+      "coinMinimalDenom": "ario",
+      "coinDecimals": 18,
+      "coinGeckoId": "realio-network"
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "RIO",
+    "coinMinimalDenom": "ario",
+    "coinDecimals": 18,
+    "coinGeckoId": "realio-network"
+  },
+  "feeCurrencies": [
+    {
+      "coinDenom": "RIO",
+      "coinMinimalDenom": "ario",
+      "coinDecimals": 18,
+      "coinGeckoId": "realio-network",
+      "gasPriceStep": {
+        "low": 4000000000,
+        "average": 5000000000,
+        "high": 8000000000
+      }
+    }
+  ],
+  "txExplorer": {
+    "mainnet": {
+      "name": "Genznodes",
+      "txUrl": "https://explorer.genznodes.dev/realio/tx"
+    }
+  },
+  "theme": {
+    "gradient": "linear-gradient(180deg, rgba(6, 209, 138, 0.32) 0%, rgba(6, 209, 138, 0) 100%)",
+    "primaryColor": "#06d18a"
+  },
+  "features": []
+}

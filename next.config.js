@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   output: 'export',
   distDir: 'build',
-  basePath: '/developers',
+  // basePath: '/developers',
   images: {
     unoptimized: true
   }

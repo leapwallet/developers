@@ -1,0 +1,57 @@
+{
+  "chainId": "eightball-1",
+  "chainName": "8ball",
+  "rest": "https://rest.cosmos.directory/8ball",
+  "rpc": "https://rpc.cosmos.directory/8ball",
+  "image": "https://assets.leapwallet.io/ebl.svg",
+  "chainRegistryPath": "8ball",
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "8ball",
+    "bech32PrefixAccPub": "8ballpub",
+    "bech32PrefixValAddr": "8ballvaloper",
+    "bech32PrefixValPub": "8ballvaloperpub",
+    "bech32PrefixConsAddr": "8ballcvalons",
+    "bech32PrefixConsPub": "8ballvalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "EBL",
+      "coinMinimalDenom": "uebl",
+      "coinDecimals": 6,
+      "coinGeckoId": "8ball"
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "EBL",
+    "coinMinimalDenom": "uebl",
+    "coinDecimals": 6,
+    "coinGeckoId": "8ball"
+  },
+  "feeCurrencies": [
+    {
+      "coinDenom": "EBL",
+      "coinMinimalDenom": "uebl",
+      "coinDecimals": 6,
+      "coinGeckoId": "8ball",
+      "gasPriceStep": {
+        "low": 0,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "txExplorer": {
+    "mainnet": {
+      "name": "Pingpub",
+      "txUrl": "https://ping.pub/8ball/tx"
+    }
+  },
+  "theme": {
+    "gradient": "linear-gradient(180deg, rgba(50, 129, 250, 0.32) 0%, rgba(50, 129, 250, 0) 100%)",
+    "primaryColor": "#3281fa"
+  },
+  "features": []
+}

@@ -1,0 +1,57 @@
+{
+  "chainId": "lum-network-1",
+  "chainName": "Lum Network",
+  "rest": "https://rest.cosmos.directory/lumnetwork",
+  "rpc": "https://rpc.cosmos.directory/lumnetwork",
+  "image": "https://assets.leapwallet.io/lum.svg",
+  "chainRegistryPath": "lumnetwork",
+  "bip44": {
+    "coinType": 880
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "lum",
+    "bech32PrefixAccPub": "lumpub",
+    "bech32PrefixValAddr": "lumvaloper",
+    "bech32PrefixValPub": "lumvaloperpub",
+    "bech32PrefixConsAddr": "lumcvalons",
+    "bech32PrefixConsPub": "lumvalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "LUM",
+      "coinMinimalDenom": "ulum",
+      "coinDecimals": 6,
+      "coinGeckoId": "lum-network"
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "LUM",
+    "coinMinimalDenom": "ulum",
+    "coinDecimals": 6,
+    "coinGeckoId": "lum-network"
+  },
+  "feeCurrencies": [
+    {
+      "coinDenom": "LUM",
+      "coinMinimalDenom": "ulum",
+      "coinDecimals": 6,
+      "coinGeckoId": "lum-network",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "txExplorer": {
+    "mainnet": {
+      "name": "Mintscan",
+      "txUrl": "https://www.mintscan.io/lum/txs"
+    }
+  },
+  "theme": {
+    "primaryColor": "#6b6399",
+    "gradient": "linear-gradient(180deg, rgba(107, 99, 153, 0.32) 0%, rgba(107, 99, 153, 0) 100%)"
+  },
+  "features": []
+}

@@ -5,6 +5,7 @@ export const frogJump = (image: HTMLImageElement) => {
   const newImage = new window.Image(image.width, image.height)
   newImage.src = image.src
   newImage.style.position = 'fixed'
+  newImage.style.zIndex = `-1`
   newImage.style.top = `${image.offsetTop}px`
   newImage.style.left = `${image.offsetLeft}px`
   // append the new image to the body
@@ -39,7 +40,7 @@ export const frogJump = (image: HTMLImageElement) => {
   }
   const animationDuration = duration * 50
   // animate the new image
-  image.animate(
+  newImage.animate(
     coords.map(({ x, y }) => {
       return {
         transform: `translate(${x}px, ${y}px)`
