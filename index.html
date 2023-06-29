@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leap DevHub</title>
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      * {
+        margin: 0;
+      }
+      body {
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+      }
+      img,
+      picture,
+      video,
+      canvas,
+      svg {
+        display: block;
+        max-width: 100%;
+      }
+      input,
+      button,
+      textarea,
+      select {
+        font: inherit;
+      }
+
+      @font-face {
+        font-family: 'Satoshi';
+        src: url('https://assets.leapwallet.io/fonts/Satoshi-Regular.woff2')
+          format('woff2');
+        font-weight: 400;
+        font-display: swap;
+      }
+      p,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        font-family: 'Satoshi', 'Helvetica', sans-serif;
+        font-weight: 400;
+        overflow-wrap: break-word;
+      }
+      a {
+        color: #0070f3;
+        text-decoration: underline;
+      }
+    </style>
+    <script>
+      var finalUrl = new URL(
+        window.location.pathname.replace('/developers', ''),
+        'https://developers.leapwallet.io'
+      )
+      var urlString = finalUrl.toString()
+    </script>
+  </head>
+  <body
+    style="
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      padding-bottom: 2rem;
+    "
+  >
+    <h1>This site has been moved</h1>
+    <p style="font-size: 1rem">
+      Redirecting to
+      <a href="" id="link">https://developers.leapwallet.io</a>
+      in <span id="time">3</span> seconds...
+    </p>
+    <script>
+      document.getElementById('link').setAttribute('href', urlString)
+      var time = 3
+      var interval = setInterval(function () {
+        time--
+        document.getElementById('time').innerHTML = time
+        if (time == 0) {
+          clearInterval(interval)
+          window.location.href = urlString
+        }
+      }, 1000)
+    </script>
+  </body>
+</html>
