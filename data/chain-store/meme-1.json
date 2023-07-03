@@ -36,9 +36,9 @@
       "coinDecimals": 6,
       "coinGeckoId": "meme-network",
       "gasPriceStep": {
-        "low": 0.01,
-        "average": 0.025,
-        "high": 0.04
+        "low": 0.025,
+        "average": 0.035,
+        "high": 0.045
       }
     }
   ],
