@@ -51,7 +51,12 @@
       "coinDenom": "DV4TNT",
       "coinDecimals": 6,
       "coinMinimalDenom": "dv4tnt",
-      "coinGeckoId": "dydx"
+      "coinGeckoId": "dydx",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
     }
   ],
   "features": []
