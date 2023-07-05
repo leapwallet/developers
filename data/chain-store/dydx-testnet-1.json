@@ -1,0 +1,63 @@
+{
+  "rpc": "http://3.128.51.185:26657",
+  "rest": "http://3.128.51.185:1317",
+  "chainId": "dydx-testnet-1",
+  "chainName": "dYdX Testnet",
+  "image": "https://assets.leapwallet.io/dydx.png",
+  "bech32Config": {
+    "bech32PrefixAccAddr": "dydx",
+    "bech32PrefixAccPub": "dydxpub",
+    "bech32PrefixValAddr": "dydxvaloper",
+    "bech32PrefixValPub": "dydxvaloperpub",
+    "bech32PrefixConsAddr": "dydxvalcons",
+    "bech32PrefixConsPub": "dydxvalconspub"
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "chainRegistryPath": "dydx",
+  "theme": {
+    "primaryColor": "#6966ff",
+    "gradient": "linear-gradient(180deg, rgba(105, 102, 255, 0.32) 0%, rgba(105, 102, 255, 0) 100%)"
+  },
+  "txExplorer": {
+    "mainnet": {
+      "name": "Mintscan",
+      "txUrl": "https://www.mintscan.io/dydx/txs"
+    }
+  },
+  "stakeCurrency": {
+    "coinDenom": "DV4TNT",
+    "coinDecimals": 6,
+    "coinMinimalDenom": "dv4tnt",
+    "coinGeckoId": "dydx"
+  },
+  "currencies": [
+    {
+      "coinDenom": "DV4TNT",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "dv4tnt",
+      "coinGeckoId": "dydx"
+    },
+    {
+      "coinDenom": "USDC",
+      "coinMinimalDenom": "ibc/8E27BA2D5493AF5636760E354E46004562C46AB7EC0CC4C1CA14E9E20E2545B5",
+      "coinDecimals": 6,
+      "coinGeckoId": "usd-coin"
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "DV4TNT",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "dv4tnt",
+      "coinGeckoId": "dydx",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "features": []
+}
