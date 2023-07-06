@@ -23,7 +23,7 @@
   "txExplorer": {
     "mainnet": {
       "name": "Mintscan",
-      "txUrl": "https://www.mintscan.io/dydx/txs"
+      "txUrl": "https://testnet.mintscan.io/dydx-testnet/txs"
     }
   },
   "stakeCurrency": {
