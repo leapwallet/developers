@@ -1,4 +1,4 @@
-# leap developer portal
+# Leap Developer Portal
 
 This is the open source developer portal for [LeapWallet](https://leapwallet.io). We have built a developer portal to help developers build on top of LeapWallet. This effort will hopefully improve the existing cosmos ecosystem and serve our thousands of users better!
 
