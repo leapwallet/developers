@@ -24,7 +24,7 @@ import { checkLeapInstallation } from '~/lib/leap'
 const TableHeader = () => (
   <div className="flex items-center w-full text-gray-500 font-medium">
     <p className="flex-[4] p-4 text-left">Chain</p>
-    <p className="hidden sm:block flex-[2] p-4 text-left">Currency</p>
+    <p className="hidden sm:block flex-[2] p-4 text-left">Token</p>
     <p className="hidden sm:block flex-[4] p-4 text-center">Node Provider</p>
     <p className="flex-[2] p-4 text-center">Status</p>
   </div>
