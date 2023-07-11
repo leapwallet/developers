@@ -290,7 +290,11 @@ const RedirectToMobileApp: React.FC = () => {
 
 export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
   useEffect(() => {
-    const timeout = setTimeout(checkLeapInstallation, 500)
+    const parsedUA = parser(window.navigator.userAgent)
+    const isMobile = parsedUA.device.type === 'mobile'
+    const timeout = setTimeout(() => {
+      checkLeapInstallation(isMobile)
+    }, 500)
     return () => clearTimeout(timeout)
   }, [])
 
