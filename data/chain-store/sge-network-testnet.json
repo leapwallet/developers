@@ -1,58 +1,57 @@
 {
-    "rpc": "https://rpc.staging.sixsigmasports.io",
-    "rest": "https://api.staging.sixsigmasports.io",
-    "chainId": "stage-sgenetwork",
-    "chainName": "stage-sgenetwork",
-    "image": "https://app-assets.testnet.sixsigmasports.io/img/logo-center.png",
-    "bech32Config": {
-      "bech32PrefixAccAddr": "sge",
-      "bech32PrefixAccPub": "sgepub",
-      "bech32PrefixValAddr": "sgevaloper",
-      "bech32PrefixValPub": "sgevaloperpub",
-      "bech32PrefixConsAddr": "sgevalcons",
-      "bech32PrefixConsPub": "sgevalconspub"
-    },
-    "bip44": {
-      "coinType": 118
-    },
-    "chainRegistryPath": "sge",
-    "theme": {
-      "primaryColor": "#6966ff",
-      "gradient": "linear-gradient(180deg, rgba(105, 102, 255, 0.32) 0%, rgba(105, 102, 255, 0) 100%)"
-    },
-    "txExplorer": {
-      "mainnet": {
-        "name": "Pingpub",
-        "txUrl": "https://pingpub.staging.sixsigmasports.io"
-      }
-    },
-    "stakeCurrency": {
+  "rpc": "https://rpc.staging.sixsigmasports.io",
+  "rest": "https://api.staging.sixsigmasports.io",
+  "chainId": "stage-sgenetwork",
+  "chainName": "stage-sgenetwork",
+  "image": "https://app-assets.testnet.sixsigmasports.io/img/logo-center.png",
+  "bech32Config": {
+    "bech32PrefixAccAddr": "sge",
+    "bech32PrefixAccPub": "sgepub",
+    "bech32PrefixValAddr": "sgevaloper",
+    "bech32PrefixValPub": "sgevaloperpub",
+    "bech32PrefixConsAddr": "sgevalcons",
+    "bech32PrefixConsPub": "sgevalconspub"
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "chainRegistryPath": "sge",
+  "theme": {
+    "primaryColor": "#6966ff",
+    "gradient": "linear-gradient(180deg, rgba(105, 102, 255, 0.32) 0%, rgba(105, 102, 255, 0) 100%)"
+  },
+  "txExplorer": {
+    "mainnet": {
+      "name": "Pingpub",
+      "txUrl": "https://pingpub.staging.sixsigmasports.io"
+    }
+  },
+  "stakeCurrency": {
+    "coinDenom": "SGE",
+    "coinDecimals": 6,
+    "coinMinimalDenom": "USGE",
+    "coinGeckoId": "sge"
+  },
+  "currencies": [
+    {
       "coinDenom": "SGE",
       "coinDecimals": 6,
       "coinMinimalDenom": "USGE",
       "coinGeckoId": "sge"
-    },
-    "currencies": [
-      {
-        "coinDenom": "SGE",
-        "coinDecimals": 6,
-        "coinMinimalDenom": "USGE",
-        "coinGeckoId": "sge"
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "SGE",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "USGE",
+      "coinGeckoId": "sge",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
       }
-    ],
-    "feeCurrencies": [
-      {
-        "coinDenom": "SGE",
-        "coinDecimals": 6,
-        "coinMinimalDenom": "USGE",
-        "coinGeckoId": "sge",
-        "gasPriceStep": {
-          "low": 0.01,
-          "average": 0.025,
-          "high": 0.04
-        }
-      }
-    ],
-    "features": []
-  }
-  
+    }
+  ],
+  "features": []
+}
