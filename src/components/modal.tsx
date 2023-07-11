@@ -97,7 +97,7 @@ export const Modal: React.FC<ModalProps> = ({ onClose, children }) => {
     <Backdrop onClick={onClose}>
       <motion.div
         onClick={handleModalClick}
-        className="p-8 rounded-2xl flex flex-col items-center justify-center bg-white shadow-md"
+        className="p-6 sm:p-8 mx-4 sm:mx-0 rounded-2xl flex flex-col items-center justify-center bg-white shadow-md"
         variants={dropIn}
         initial="hidden"
         animate="visible"

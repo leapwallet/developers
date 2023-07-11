@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@phosphor-icons/react": "2.0.9",
+    "@types/ua-parser-js": "^0.7.36",
     "framer-motion": "10.12.16",
     "fuse.js": "6.6.2",
     "next": "13.4.2",
@@ -18,6 +19,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-hot-toast": "2.4.1",
+    "ua-parser-js": "^1.0.35",
     "zod": "3.21.4"
   },
   "devDependencies": {
