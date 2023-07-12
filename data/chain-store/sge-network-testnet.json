@@ -1,0 +1,57 @@
+{
+  "rpc": "https://rpc.staging.sixsigmasports.io",
+  "rest": "https://api.staging.sixsigmasports.io",
+  "chainId": "stage-sgenetwork",
+  "chainName": "Stage SGE Network",
+  "image": "https://assets.leapwallet.io/sge.png",
+  "bech32Config": {
+    "bech32PrefixAccAddr": "sge",
+    "bech32PrefixAccPub": "sgepub",
+    "bech32PrefixValAddr": "sgevaloper",
+    "bech32PrefixValPub": "sgevaloperpub",
+    "bech32PrefixConsAddr": "sgevalcons",
+    "bech32PrefixConsPub": "sgevalconspub"
+  },
+  "bip44": {
+    "coinType": 118
+  },
+  "chainRegistryPath": "sge",
+  "theme": {
+    "primaryColor": "#6966ff",
+    "gradient": "linear-gradient(180deg, rgba(105, 102, 255, 0.32) 0%, rgba(105, 102, 255, 0) 100%)"
+  },
+  "txExplorer": {
+    "mainnet": {
+      "name": "Pingpub",
+      "txUrl": "https://blockexplorer.staging.sgenetwork.io/sge-network/tx"
+    }
+  },
+  "stakeCurrency": {
+    "coinDenom": "SGE",
+    "coinDecimals": 6,
+    "coinMinimalDenom": "usge",
+    "coinGeckoId": "sge"
+  },
+  "currencies": [
+    {
+      "coinDenom": "SGE",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "usge",
+      "coinGeckoId": "sge"
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "SGE",
+      "coinDecimals": 6,
+      "coinMinimalDenom": "usge",
+      "coinGeckoId": "sge",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "features": []
+}
