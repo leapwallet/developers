@@ -3,8 +3,8 @@ import toast from 'react-hot-toast'
 const leapWalletChromeStoreURL =
   'https://chrome.google.com/webstore/detail/leap-cosmos-wallet/fcfcfllfndlomdhbehjjcoimbgofdncg'
 
-export const checkLeapInstallation = () => {
-  if (!window.leap) {
+export const checkLeapInstallation = (isMobile: boolean) => {
+  if (!window.leap && !isMobile) {
     const id = toast.error(
       () => {
         return (

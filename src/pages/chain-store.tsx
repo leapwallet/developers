@@ -5,6 +5,7 @@ import {
   MagnifyingGlass,
   Plus
 } from '@phosphor-icons/react'
+import parser from 'ua-parser-js'
 import Head from 'next/head'
 import Image from 'next/image'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
@@ -20,6 +21,8 @@ import { SuggestChainData } from '~/lib/types'
 import { getChainsData } from '~/server/utils'
 import { LeapProvider, useLeapContext } from '~/context/leap'
 import { checkLeapInstallation } from '~/lib/leap'
+import { Modal } from '~/components/modal'
+import { AnimatePresence } from 'framer-motion'
 
 const TableHeader = () => (
   <div className="flex items-center w-full text-gray-500 font-medium">
@@ -231,9 +234,67 @@ const ChainsTable: React.FC<{ chains: SuggestChainData[] }> = ({ chains }) => {
   )
 }
 
+const RedirectToMobileApp: React.FC = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const close = useCallback(() => {
+    setIsModalOpen(false)
+  }, [])
+
+  useEffect(() => {
+    const parsedUA = parser(window.navigator.userAgent)
+    const isMobile = parsedUA.device.type === 'mobile'
+    if (isMobile) {
+      setIsModalOpen(true)
+    }
+  }, [])
+
+  return (
+    <AnimatePresence initial={false} mode="wait" onExitComplete={() => null}>
+      {isModalOpen ? (
+        <Modal onClose={close}>
+          <div className="w-full max-w-md">
+            <div className="flex items-start gap-4">
+              <p className="text-2xl sm:text-6xl p-2 border border-gray-200 rounded-xl aspect-square">
+                🐸
+              </p>
+              <h3 className="font-bold text-xl sm:text-4xl text-gray-800 text-left">
+                Looks like you are on mobile 📱
+              </h3>
+            </div>
+            <p className="text-gray-700 mt-4 text-left text-base sm:text-lg">
+              You can add chains to your Leap Wallet from the Leap dApp Browser.
+            </p>
+            <div className="mt-6 flex flex-col justify-end gap-2">
+              <button
+                onClick={close}
+                className="px-6 py-2 rounded-lg bg-gray-200 text-gray-800 font-medium flex items-center justify-center"
+              >
+                Cancel
+              </button>
+              <a
+                href="https://leapcosmoswallet.page.link/nUaeM4FHX1ojxPh88"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-6 py-2 rounded-lg bg-indigo-500 text-white font-medium flex items-center justify-center"
+              >
+                Open Leap dApp Browser
+              </a>
+            </div>
+          </div>
+        </Modal>
+      ) : null}
+    </AnimatePresence>
+  )
+}
+
 export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
   useEffect(() => {
-    const timeout = setTimeout(checkLeapInstallation, 500)
+    const parsedUA = parser(window.navigator.userAgent)
+    const isMobile = parsedUA.device.type === 'mobile'
+    const timeout = setTimeout(() => {
+      checkLeapInstallation(isMobile)
+    }, 500)
     return () => clearTimeout(timeout)
   }, [])
 
@@ -265,6 +326,7 @@ export default function ChainStore({ chains }: { chains: SuggestChainData[] }) {
           </p>
         </PageBanner>
         <LeapProvider>
+          <RedirectToMobileApp />
           <main className="px-4 sm:mt-6 constraint-w pb-12">
             <ChainsTable chains={chains} />
           </main>
