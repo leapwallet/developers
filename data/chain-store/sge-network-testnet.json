@@ -2,8 +2,8 @@
   "rpc": "https://rpc.staging.sixsigmasports.io",
   "rest": "https://api.staging.sixsigmasports.io",
   "chainId": "stage-sgenetwork",
-  "chainName": "stage-sgenetwork",
-  "image": "https://app-assets.testnet.sixsigmasports.io/img/logo-center.png",
+  "chainName": "Stage SGE Network",
+  "image": "https://assets.leapwallet.io/sge.png",
   "bech32Config": {
     "bech32PrefixAccAddr": "sge",
     "bech32PrefixAccPub": "sgepub",
@@ -23,20 +23,20 @@
   "txExplorer": {
     "mainnet": {
       "name": "Pingpub",
-      "txUrl": "https://pingpub.staging.sixsigmasports.io"
+      "txUrl": "https://blockexplorer.staging.sgenetwork.io/sge-network/tx"
     }
   },
   "stakeCurrency": {
     "coinDenom": "SGE",
     "coinDecimals": 6,
-    "coinMinimalDenom": "USGE",
+    "coinMinimalDenom": "usge",
     "coinGeckoId": "sge"
   },
   "currencies": [
     {
       "coinDenom": "SGE",
       "coinDecimals": 6,
-      "coinMinimalDenom": "USGE",
+      "coinMinimalDenom": "usge",
       "coinGeckoId": "sge"
     }
   ],
@@ -44,7 +44,7 @@
     {
       "coinDenom": "SGE",
       "coinDecimals": 6,
-      "coinMinimalDenom": "USGE",
+      "coinMinimalDenom": "usge",
       "coinGeckoId": "sge",
       "gasPriceStep": {
         "low": 0.01,
