@@ -1,0 +1,53 @@
+{
+  "rpc": "https://rpc.ankr.com/zetachain_tendermint_athens_testnet",
+  "rest": "https://rpc.ankr.com/http/zetachain_athens_testnet",
+  "chainId": "athens_7001-1",
+  "chainName": "ZetaChain Athens 3 Testnet",
+  "image": "https://assets.leapwallet.io/athens_7001-1.png",
+  "bech32Config": {
+    "bech32PrefixAccAddr": "zeta",
+    "bech32PrefixAccPub": "zetapub",
+    "bech32PrefixValAddr": "zetavaloper",
+    "bech32PrefixValPub": "zetavaloperpub",
+    "bech32PrefixConsAddr": "zetavalcons",
+    "bech32PrefixConsPub": "zetavalconspub"
+  },
+  "bip44": {
+    "coinType": 60
+  },
+  "theme": {
+    "primaryColor": "#726FDC",
+    "gradient": "linear-gradient(180deg, rgba(105, 102, 255, 0.32) 0%, rgba(105, 102, 255, 0) 100%)"
+  },
+  "txExplorer": {
+    "mainnet": {
+      "name": "ZetaScan",
+      "txUrl": "https://athens3.explorer.zetachain.com/cc/tx"
+    }
+  },
+  "stakeCurrency": {
+    "coinDenom": "tZETA",
+    "coinDecimals": 18,
+    "coinMinimalDenom": "azeta"
+  },
+  "currencies": [
+    {
+      "coinDenom": "tZETA",
+      "coinDecimals": 18,
+      "coinMinimalDenom": "azeta"
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "tZETA",
+      "coinDecimals": 18,
+      "coinMinimalDenom": "azeta",
+      "gasPriceStep": {
+        "low": 0.01,
+        "average": 0.025,
+        "high": 0.04
+      }
+    }
+  ],
+  "features": []
+}
