@@ -1,0 +1,57 @@
+{
+  "chainId": "bbn-test-2",
+  "chainName": "Babylon Testnet",
+  "image": "https://assets.leapwallet.io/bbn.png",
+  "rpc": "https://rpc.testnet.babylonchain.io",
+  "rest": "https://lcd.testnet.babylonchain.io",
+  "chainRegistryPath": "babylontestnet",
+  "bip44": {
+    "coinType": 118
+  },
+  "bech32Config": {
+    "bech32PrefixAccAddr": "bbn",
+    "bech32PrefixAccPub": "bbnpub",
+    "bech32PrefixValAddr": "bbnvaloper",
+    "bech32PrefixValPub": "bbnvaloperpub",
+    "bech32PrefixConsAddr": "bbnvalcons",
+    "bech32PrefixConsPub": "bbnvalconspub"
+  },
+  "currencies": [
+    {
+      "coinDenom": "BBN",
+      "coinMinimalDenom": "ubbn",
+      "coinDecimals": 6,
+      "coinGeckoId": ""
+    }
+  ],
+  "feeCurrencies": [
+    {
+      "coinDenom": "BBN",
+      "coinMinimalDenom": "ubbn",
+      "coinDecimals": 6,
+      "coinGeckoId": "",
+      "gasPriceStep": {
+        "low": 0.007,
+        "average": 0.007,
+        "high": 0.01
+      }
+    }
+  ],
+  "stakeCurrency": {
+    "coinDenom": "BBN",
+    "coinMinimalDenom": "ubbn",
+    "coinDecimals": 6,
+    "coinGeckoId": ""
+  },
+  "txExplorer": {
+    "mainnet": {
+      "name": "Babylon Scan",
+      "txUrl": "https://babylonscan.io/txs"
+    }
+  },
+  "theme": {
+    "primaryColor": "#4E80E4",
+    "gradient": "linear-gradient(180deg, rgba(78, 128, 228, 0.32) 0%, rgba(78, 128, 228, 0) 100%)"
+  },
+  "features": []
+}
